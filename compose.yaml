@@ -1,0 +1,26 @@
+services:
+  bff:
+    working_dir: /bff
+    build:
+      context: .
+      dockerfile: Dockerfile.bff
+    ports:
+      - "8080:8080"
+    networks:
+      - sample-bff
+  frontend:
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - sample-bff
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+networks:
+  sample-bff:
+volumes:
+  node_modules:

@@ -1,0 +1,18 @@
+FROM golang:1.22-bullseye as builder
+
+WORKDIR /bff
+
+COPY ./bff/go.mod ./bff/go.sum ./
+RUN go mod download
+
+COPY ./bff/*.go ./
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
+
+
+FROM ubuntu:22.04
+
+WORKDIR /bff
+
+COPY --from=builder /bff/server .
+EXPOSE 8080
+CMD ["./server"]
