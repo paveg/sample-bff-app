@@ -5,7 +5,7 @@ WORKDIR /bff
 COPY ./bff/go.mod ./bff/go.sum ./
 RUN go mod download
 
-COPY ./bff/*.go ./
+COPY ./bff .
 RUN CGO_ENABLED=0 GOOS=linux go build -o server
 
 

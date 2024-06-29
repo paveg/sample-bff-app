@@ -1,4 +1,14 @@
 services:
+  backend:
+    working_dir: /backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "50051:50051"
+    networks:
+      - sample-bff
+    tty: true
   bff:
     working_dir: /bff
     build:
@@ -8,6 +18,11 @@ services:
       - "8080:8080"
     networks:
       - sample-bff
+    depends_on:
+      - backend
+    tty: true
+    extra_hosts:
+      - host.docker.internal:host-gateway
   frontend:
     working_dir: /app
     build:

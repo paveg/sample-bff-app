@@ -1,0 +1,19 @@
+FROM golang:1.22-bullseye as builder
+
+WORKDIR /backend
+
+COPY ./backend/go.mod ./backend/go.sum ./
+RUN go mod download
+
+COPY ./backend ./
+WORKDIR /backend/cmd/server
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
+
+
+FROM ubuntu:22.04
+
+WORKDIR /backend
+
+COPY --from=builder /backend/cmd/server .
+EXPOSE 50051
+CMD ["./server", "0.0.0.0:50051"]
