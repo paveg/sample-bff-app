@@ -1,5 +1,5 @@
 import "./App.css";
-import { Message } from "./components/message";
+import { Message } from "./components/call-message";
 
 function App() {
 

@@ -50,8 +50,9 @@ func main() {
 	client = hellopb.NewGreetingServiceClient(conn)
 
 	r.GET("/api/p/message", func(c *gin.Context) {
+		name := c.Query("name")
 		req := &hellopb.HelloRequest{
-			Name: "",
+			Name: name,
 		}
 		res, err := client.Hello(context.Background(), req)
 		if err != nil {
