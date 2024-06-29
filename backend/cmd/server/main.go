@@ -20,7 +20,7 @@ type Server struct {
 
 func (s *Server) Hello(ctx context.Context, req *hellopb.HelloRequest) (*hellopb.HelloResponse, error) {
 	return &hellopb.HelloResponse{
-		Message: fmt.Sprintln("Hello World!"),
+		Message: fmt.Sprintln("Hello gRPC server!"),
 	}, nil
 }
 
